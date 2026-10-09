@@ -9,8 +9,9 @@
 export const CLUSTER_BYTES = 4096
 
 /**
- * Extra clusters an upload used beyond ceil(size / 4096). Measured on an E87: a 131,090-byte file (33 clusters)
- * lowered the free space by 136 KB = 34 clusters.
+ * Extra clusters assumed beyond ceil(size / 4096). This is a conservative allowance, not a constant: on an E87 a
+ * 131,090-byte file (33 clusters) lowered the free space by 136 KB = 34 clusters, but a 26,693-byte file (7 clusters)
+ * lowered it by exactly 28 KB = 7 clusters.
  */
 export const OVERHEAD_CLUSTERS = 1
 

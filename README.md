@@ -388,11 +388,11 @@ time, with or without the RCSP auth handshake. The reply payload is `[01][width:
 - Every value seen is a multiple of 4, i.e. **free clusters × 4 KB**.
 - A file larger than the free space is **accepted through the whole transfer** and only rejected at the end: the badge sends `0x1C`
   with status `0x03` (data/CRC error) and never sends `0x20`.
-- Measured: uploading a 131,090-byte file (33 clusters of data) lowered the free space from 2252 KB to 2116 KB, i.e. 34 clusters
-  (one more than the data needs).
+- Measured: uploading a 131,090-byte file (33 clusters of data) lowered the free space from 2252 KB to 2116 KB, i.e. 34 clusters (one more than the
+  data needs), while a 26,693-byte file (7 clusters) lowered it from 3416 KB to 3388 KB, i.e. exactly 7. So the check assumes one extra cluster to be safe.
 
 The app reads the free space on connect, re-reads it before and after every upload, shows it, and warns before sending a file that
-is expected not to fit (it asks for confirmation rather than blocking, because the one-cluster overhead is a single measurement).
+is expected not to fit (it asks for confirmation rather than blocking, because the one-cluster allowance is conservative and has only been measured twice).
 
 ---
 
